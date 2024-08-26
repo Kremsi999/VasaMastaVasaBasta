@@ -1,27 +1,101 @@
-# Frontend
+- Globalna instalacija:
+	- ``` npm install -g @angular/cli@16.2.2```
+- Inicijalizovanje aplikacije:
+	- ```ng new <app_name>```
+	- ```routing - YES, styles - CSS```
+	- ```cd <app_name> ng serve --open //pokretanje aplikacije```
+- Generisanje komponente:
+	- ```ng g c <component_name>```
+	- Unutar komponente postoje fajlovi za stil, html i logiku
+```
+export class LoginComponent {
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
+	constructor(private servis: UserService, private router: Router){}
+	
+	username: string = ""
+	password: string = ""
 
-## Development server
+	login(){
+		this.servis.login(this.username, this.password).subscribe(data=>{
+			if(data==null) alert("Nema korisnika")
+			else {
+				localStorage.setItem("logged", data.username)
+				this.router.navigate(['books'])
+			}
+		})
+	}
+}	
+```
+- Generisanje servisa:
+	- ```ng g s <service-name>```
+```
+export class UserService {
+	constructor(private http: HttpClient) { }
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+	login(username: string, password: string){
+		const data={
+			username: username,
+			password: password
+		}
+		return this.http.post<User>("http://localhost:4000/users/login", data)
+	}
+}
+```
+- Generisanje guard-ova:
+	- ```ng g g <guard_name>```
+	- kace se na rutu u okviru router-module-a
+```
+//book.guard.ts
+import { CanActivateFn } from '@angular/router';
 
-## Code scaffolding
+export const bookGuard: CanActivateFn = (route, state) => {
+	if (localStorage.getItem("logged")!=null) return true;
+	else {
+		alert("No")
+		return false;
+	}
+};
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+//app-routing-module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { BooksComponent } from './books/books.component';
+import { bookGuard } from './book.guard';
 
-## Build
+const routes: Routes = [
+	{path: "", component: LoginComponent},
+	{path: "register", component: RegisterComponent},
+	{path: "books", component: BooksComponent, canActivate: [bookGuard]}
+];
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+@NgModule({
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+- Strukturalne direktive:
+	- *\*ngFor
+	- *\*ngIf
+	- *\*ngSwitch
+- One-way binding:
+	- Interpolacija;
+	- Property binding:
+		- `````` <img alt="item" [src]="itemImageUrl"> //HTML  
+		- ``````temImageUrl = '../assets/phone.svg’; //TS
+	- Atribute binding:		```
+		<button type="button" [attr.aria-label]="actionName">
+			{{actionName}} with Aria
+		</button>
+	- Class and style binding:
+		```[class.sale]="onSale" true,false```
+	- Event binding:
+		```<button (click)="onSave()">Save</button>```
+- Ugradjene funkcije u komponentama:
+	- ngOnInit(): void - pandam useEffect-u
+- Dekoratori:
+	- @Input - vredonst i komponente koja je visa u hijerarhiji (kao props)
+- Direktive:
+	- `<ng-template> - kao conditional rendering u React-u
