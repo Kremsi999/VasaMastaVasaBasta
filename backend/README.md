@@ -1,17 +1,19 @@
 # Node/Express
-- Inicijalizovanje aplikacije:
-	-  `npm init //U inicilazaciji entry point je dist/server.js
-	-  `npm i typescript --save-dev
-	-  `npm i @types/node --save-dev
-	-  `npm i express
-	-  `npm i @types/express --save-dev
-	-  `npm i cors //za cross-origin
-	-  `npm i @types/cors --save-dev
-	-  `npm i mongoose
-	-  `npm i mongodb
-	- `npx tsc --init --outDir dist //kompajler
-- Kontorleri:
-	- Logika endpoint-a koja se obradjuje na aplikaciji
+
+-   Inicijalizovanje aplikacije:
+    -   `npm init //U inicilazaciji entry point je dist/server.js
+    -   `npm i typescript --save-dev
+    -   `npm i @types/node --save-dev
+    -   `npm i express
+    -   `npm i @types/express --save-dev
+    -   `npm i cors //za cross-origin
+    -   `npm i @types/cors --save-dev
+    -   `npm i mongoose
+    -   `npm i mongodb
+    -   `npx tsc --init --outDir dist //kompajler
+-   Kontorleri:
+    -   Logika endpoint-a koja se obradjuje na aplikaciji
+
 ```
 import express from 'express'
 import UserModel from '../models/user'
@@ -35,8 +37,10 @@ export class UserController{
 	}
 }
 ```
-- Rutiranje:
-	- Generisanje ruta sa kojima pristupamo endpoint-u
+
+-   Rutiranje:
+    -   Generisanje ruta sa kojima pristupamo endpoint-u
+
 ```
 import express from 'express'
 import { UserController } from '../controllers/user.controller'
@@ -46,7 +50,9 @@ userRouter.route("/login").post(
 	(req,res)=>new UserController().login(req,res)
 )
 ```
-- Glavna aplikacija:
+
+-   Glavna aplikacija:
+
 ```
 import express from 'express';
 import cors from 'cors'
@@ -70,9 +76,12 @@ router.use('/users', userRouter)
 app.use("/" ,router)
 app.listen(4000, () => console.log(`Express server running on port 4000`));
 ```
+
 # MongoDB
-- Pokretanje servisa u pozadini da bi radilo (otvorimo port 27017)
-- Povezivanje monga sa express aplikacijom:
+
+-   Pokretanje servisa u pozadini da bi radilo (otvorimo port 27017)
+-   Povezivanje monga sa express aplikacijom:
+
 ```
 import mongoose from 'mongoose'
 
@@ -83,7 +92,9 @@ conn.open('open', () => {
 	console.log('db connection ok')
 })
 ```
-- Modeli:
+
+-   Modeli:
+
 ```
 import mongoose from 'mongoose'
 
@@ -101,7 +112,9 @@ let User = new Schema({
 //Naziv modela, Sema, naziv kolekcije
 export default mongoose.model('UserModel', User, 'korisnici')
 ```
-- Upiti
+
+-   Upiti
+
 ```
 import UserModel from '...'
 
@@ -142,7 +155,7 @@ UserModel.find({})
 		console.log(err)
 	})
 
-//Unos u kolekciju (prethodno napravljen objekat user tipa UserModel) 
+//Unos u kolekciju (prethodno napravljen objekat user tipa UserModel)
 user.save()
 	.then((ok) => {
 		res.json({'message': 'ok'})

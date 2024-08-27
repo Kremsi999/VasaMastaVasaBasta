@@ -7,7 +7,7 @@ var __importDefault =
 Object.defineProperty(exports, '__esModule', { value: true })
 const mongoose_1 = __importDefault(require('mongoose'))
 const Schema = mongoose_1.default.Schema
-let User = new Schema({
+const User = new Schema({
     username: {
         type: String,
     },
