@@ -2,7 +2,6 @@ import express from 'express'
 import mongoose from 'mongoose'
 import authRouter from './routes/authentication.router'
 import cors from 'cors'
-import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -14,7 +13,6 @@ app.use(cors())
 app.use(express.json())
 
 mongoose.connect(`${process.env.MONGO_URI as string}`)
-// mongoose.connect(`mongodb://localhost:27017/PIAProject`)
 const conn = mongoose.connection
 conn.once('open', () => {
     console.log('DB ok')

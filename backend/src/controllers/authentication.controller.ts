@@ -10,7 +10,6 @@ import {
 } from '../utils/regex'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import generateToken from '../utils/jwt'
 dotenv.config()
 
 const register = async (req: Request, res: Response) => {
@@ -152,7 +151,7 @@ const changePassword = async (req: Request, res: Response) => {
             const match = await comparePassword(password, user.password!)
 
             if (match) {
-                let newPass = await hashPassword(newPassword)
+                const newPass = await hashPassword(newPassword)
                 await UserModel.updateOne(
                     { username: username },
                     { password: newPass }

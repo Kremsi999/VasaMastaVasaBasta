@@ -17,7 +17,7 @@ const User = new Schema({
     },
     gender: {
         type: String,
-        enum: ['M', 'Ž'],
+        enum: ['M', 'F'],
     },
     address: {
         type: String,
