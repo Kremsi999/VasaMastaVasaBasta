@@ -10,7 +10,6 @@ import { OwnerProfileService } from '../services/owner-profile-service.service';
 export class OwnerProfileComponent {
   username: string = ''; // ID korisnika, dobijen iz URL-a ili tokena
   profile: any = {};
-  tmpProfile: any = {};
   editMode = false;
 
   constructor(private profileService: OwnerProfileService, private route: ActivatedRoute) {}
@@ -34,7 +33,7 @@ export class OwnerProfileComponent {
 
   toggleEditMode(): void {
     if(this.editMode) {
-      this.profile = this.tmpProfile
+      this.getProfile()
     }
     this.editMode = !this.editMode;
   }
@@ -61,7 +60,6 @@ export class OwnerProfileComponent {
     this.profileService.updateProfile(this.username, this.profile).subscribe(
       updatedProfile => {
         this.profile = updatedProfile;
-        this.tmpProfile = this.profile
         this.editMode = false;
       },
       error => {

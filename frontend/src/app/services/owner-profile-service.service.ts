@@ -18,6 +18,19 @@ export class OwnerProfileService {
   }
 
   updateProfile(username: string, profileData: any) {
-    return this.http.put(`${this.uri}`, profileData);
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('firstName', profileData.firstName);
+    formData.append('lastName', profileData.lastName);
+    formData.append('address', profileData.address);
+    formData.append('phone', profileData.phone);
+    formData.append('email', profileData.email);
+    formData.append('creditCardNumber', profileData.creditCardNumber);
+
+    if (profileData.profilePicture) {
+      formData.append('profilePicture', profileData.profilePicture);
+    }
+
+    return this.http.put(`${this.uri}`, formData);
   }
 }

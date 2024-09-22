@@ -27,7 +27,7 @@ const updateUserInfo = async(req: Request, res: Response) => {
     user.phone = req.body.phone || user.phone;
     user.email = req.body.email || user.email;
     user.creditCardNumber = req.body.creditCardNumber || user.creditCardNumber;
-
+    console.log(req.file)
     if (req.file) {
       user.profilePicture!.data = req.file.buffer; 
       user.profilePicture!.contentType = req.file.mimetype; 
