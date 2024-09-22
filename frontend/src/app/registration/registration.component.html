@@ -1,0 +1,90 @@
+<div class="max-w-md mx-auto mt-10">
+    <form (ngSubmit)="onSubmit()" #registrationForm="ngForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 class="text-2xl font-bold mb-6 text-center">Registracija</h2>
+      
+      <!-- Korisničko ime -->
+      <div class="mb-4">
+        <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Korisničko ime</label>
+        <input type="text" id="username" name="username" [(ngModel)]="user.username" required minlength="3"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      
+      <!-- Lozinka -->
+      <div class="mb-4">
+        <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Lozinka</label>
+        <input type="password" id="password" name="password" [(ngModel)]="user.password" required pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[a-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,10}$"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      
+      <!-- Ime -->
+      <div class="mb-4">
+        <label for="firstName" class="block text-gray-700 text-sm font-bold mb-2">Ime</label>
+        <input type="text" id="firstName" name="firstName" [(ngModel)]="user.firstName" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      
+      <!-- Prezime -->
+      <div class="mb-4">
+        <label for="lastName" class="block text-gray-700 text-sm font-bold mb-2">Prezime</label>
+        <input type="text" id="lastName" name="lastName" [(ngModel)]="user.lastName" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+  
+      <!-- Pol -->
+      <div class="mb-4">
+        <label for="gender" class="block text-gray-700 text-sm font-bold mb-2">Pol</label>
+        <select id="gender" name="gender" [(ngModel)]="user.gender" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option value="M">M</option>
+          <option value="Z">Ž</option>
+        </select>
+      </div>
+  
+      <!-- Adresa -->
+      <div class="mb-4">
+        <label for="address" class="block text-gray-700 text-sm font-bold mb-2">Adresa</label>
+        <input type="text" id="address" name="address" [(ngModel)]="user.address" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+  
+      <!-- Kontakt telefon -->
+      <div class="mb-4">
+        <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Kontakt telefon</label>
+        <input type="tel" id="phone" name="phone" [(ngModel)]="user.phone" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+  
+      <!-- Email adresa -->
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email adresa</label>
+        <input type="email" id="email" name="email" [(ngModel)]="user.email" required
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+  
+      <!-- Profilna slika -->
+      <div class="mb-4">
+        <label for="profilePicture" class="block text-gray-700 text-sm font-bold mb-2">Profilna slika</label>
+        <input type="file" id="profilePicture" name="profilePicture" (change)="onFileSelected($event)"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+  
+      <!-- Broj kreditne kartice -->
+      <div class="mb-4">
+        <label for="creditCard" class="block text-gray-700 text-sm font-bold mb-2">Broj kreditne kartice</label>
+        <input type="text" id="creditCardNumber" name="creditCardNumber" [(ngModel)]="user.creditCardNumber" required pattern="^(300|301|302|303|36|38|51|52|53|54|55|4539|4556|4916|4532|4929|4485|4716)\d{11,14}$"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+  
+       <!-- reCAPTCHA -->
+      <div class="flex justify-center my-4">
+        <re-captcha (resolved)="onCaptchaResolved($event)" siteKey="6LdNbjEqAAAAACDl1HhLAPde7IpzgaBdFQ51bon3"></re-captcha>
+      </div>
+  
+      <!-- Dugme za slanje -->
+      <div class="flex items-center justify-between">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Registruj se
+        </button>
+      </div>
+    </form>
+  </div>

@@ -28,6 +28,7 @@ const register = async (req: Request, res: Response) => {
         } = req.body
         let profilePictureData: Buffer | undefined
         let profilePictureContentType: string | undefined
+        console.log(creditCardNumber)
 
         if (req.file) {
             profilePictureData = req.file.buffer
@@ -47,7 +48,7 @@ const register = async (req: Request, res: Response) => {
             !masterCardRegex.test(creditCardNumber) &&
             !visaRegex.test(creditCardNumber)
         ) {
-            res.status(406).send('Credit card is invalid!')
+            res.status(406).send({msg: 'Credit card is invalid!', creditCard: creditCardNumber})
             return
         }
         if (await UserModel.findOne({ email })) {
@@ -118,7 +119,7 @@ const login = async (req: Request, res: Response) => {
                     maxAge: 900000,
                     httpOnly: true,
                 })
-                res.status(200).send('User logged in successfully!')
+                res.status(200).send({msg: 'User logged in successfully!'})
             } else {
                 res.status(406).send('Lozinka nije validna!')
             }
@@ -156,7 +157,7 @@ const changePassword = async (req: Request, res: Response) => {
                     { username: username },
                     { password: newPass }
                 )
-                res.status(200).send('Updated password successfully!')
+                res.status(200).send({msg: 'Updated password successfully!'})
             } else {
                 res.status(406).send('Lozinka nije validna!')
             }
