@@ -1,0 +1,41 @@
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Profil</h1>
+  
+    <div *ngIf="!editMode">
+      <img [src]="getProfilePicture(profile)" alt="Profilna slika" class="w-24 h-24 rounded-full mb-4">
+      <p><strong>Ime:</strong> {{ profile.firstName }}</p>
+      <p><strong>Prezime:</strong> {{ profile.lastName }}</p>
+      <p><strong>Adresa:</strong> {{ profile.address }}</p>
+      <p><strong>Telefon:</strong> {{ profile.phone }}</p>
+      <p><strong>Email:</strong> {{ profile.email }}</p>
+      <p><strong>Broj kreditne kartice:</strong> {{ profile.creditCardNumber }}</p>
+  
+      <button (click)="toggleEditMode()" class="bg-blue-500 text-white p-2 rounded">Ažuriraj profil</button>
+    </div>
+  
+    <div *ngIf="editMode">
+      <input type="file" id="profilePicture" name="profilePicture" (change)="onFileSelected($event)" class="mb-4">
+  
+      <label for="firstName">Ime</label>
+      <input id="firstName" [(ngModel)]="profile.firstName" class="border p-2 rounded mb-2 block">
+  
+      <label for="lastName">Prezime</label>
+      <input id="lastName" [(ngModel)]="profile.lastName" class="border p-2 rounded mb-2 block">
+  
+      <label for="address">Adresa</label>
+      <input id="address" [(ngModel)]="profile.address" class="border p-2 rounded mb-2 block">
+  
+      <label for="phone">Telefon</label>
+      <input id="phone" [(ngModel)]="profile.phone" class="border p-2 rounded mb-2 block">
+  
+      <label for="email">Email</label>
+      <input id="email" [(ngModel)]="profile.email" class="border p-2 rounded mb-2 block">
+  
+      <label for="creditCardNumber">Broj kreditne kartice</label>
+      <input id="creditCardNumber" [(ngModel)]="profile.creditCardNumber" class="border p-2 rounded mb-2 block">
+  
+      <button (click)="updateProfile()" class="bg-green-500 text-white p-2 rounded">Sačuvaj izmene</button>
+      <button (click)="toggleEditMode()" class="bg-gray-500 text-white p-2 rounded">Otkaži</button>
+    </div>
+  </div>
+  

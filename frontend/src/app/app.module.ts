@@ -10,13 +10,23 @@ import { RegistrationComponent } from './registration/registration.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { OwnerProfileComponent } from './owner-profile/owner-profile.component';
+import { OwnerAppComponent } from './owner-app/owner-app.component';
+import { DekoratorAppComponent } from './dekorator-app/dekorator-app.component';
+import { AdminAppComponent } from './admin-app/admin-app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    DashboardComponent,
+    OwnerProfileComponent,
+    OwnerAppComponent,
+    DekoratorAppComponent,
+    AdminAppComponent
   ],
   imports: [
     BrowserModule,
