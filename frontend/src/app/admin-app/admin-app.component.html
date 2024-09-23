@@ -1,1 +1,176 @@
-<p>admin-app works!</p>
+<h2>Korisnici</h2>
+<table>
+  <tr>
+    <th>Tip</th>
+    <th>Ime</th>
+    <th>Prezime</th>
+    <th>Email</th>
+    <th>Status</th>
+    <th>Akcija</th>
+  </tr>
+  <tr *ngFor="let user of users">
+    <td>{{ user.type }}</td>
+    <td>{{ user.firstName }}</td>
+    <td>{{ user.lastName }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.status }}</td>
+    <td>
+      <button (click)="editUser(user)" *ngIf="user.status !== 'Deactivated'">Uredi</button>
+      <button (click)="deactivateUser(user.username)" *ngIf="user.status !== 'Deactivated'">Deaktiviraj</button>
+      <button (click)="approveRequest(user.username)" *ngIf="user.status == 'Pending'">Prihvati</button>
+      <button (click)="denyRequest(user.username)" *ngIf="user.status == 'Pending'">Odbij</button>
+    </td>
+  </tr>
+</table>
+<h2>Firme</h2>
+<table class="min-w-full bg-white border border-gray-300 rounded">
+    <tr>
+        <th>Naziv</th>
+        <th>Adresa</th>
+        <th>Broj telefona</th>
+        <th>Zaposleni</th>
+    </tr>
+    <tr *ngFor="let firm of firms" class="border-t border-gray-200">
+        <td class="py-2 px-4">{{ firm.name }}</td>
+        <td class="py-2 px-4">{{ firm.address }}</td>
+        <td class="py-2 px-4">{{ firm.phoneNumber }}</td>
+        <td class="py-2 px-4">
+            <ul>
+            <li *ngFor="let employee of firm.employees">{{ employee.firstName }} {{ employee.lastName }}</li>
+            </ul>
+        </td>
+    </tr>
+  </table>
+
+<!-- Forma za uređivanje korisnika -->
+<div *ngIf="editMode">
+  <h3>Uredi korisnika</h3>
+  <form (ngSubmit)="updateUser()">
+    <label for="firstName">Ime:</label>
+    <input id="firstName" [(ngModel)]="selectedUser!.firstName" name="firstName" required>
+
+    <label for="lastName">Prezime:</label>
+    <input id="lastName" [(ngModel)]="selectedUser!.lastName" name="lastName" required>
+
+    <label for="email">Email:</label>
+    <input id="email" [(ngModel)]="selectedUser!.email" name="email" required>
+
+    <label for="address">Adresa:</label>
+    <input id="address" [(ngModel)]="selectedUser!.address" name="address" required>
+
+    <label for="phone">Telefon:</label>
+    <input id="phone" [(ngModel)]="selectedUser!.phone" name="phone" required>
+
+    <!-- Dugmad za potvrdu i otkazivanje -->
+    <button type="submit">Sačuvaj izmene</button>
+    <button type="button" (click)="cancelEdit()">Otkaži</button>
+  </form>
+</div>
+
+<h2>Dodaj novu firmu</h2>
+<form (ngSubmit)="addFirm()">
+  <label for="name">Naziv firme:</label>
+  <input id="name" [(ngModel)]="firm.name" name="name" required>
+
+  <label for="address">Adresa:</label>
+  <input id="address" [(ngModel)]="firm.address" name="address" required>
+
+  <label for="services">Usluge (odvojene zarezima):</label>
+  <input id="services" [(ngModel)]="firm.services" name="services" required>
+
+  <label for="pricing">Cenovnik (format: usluga:cena):</label>
+  <input id="pricing" [(ngModel)]="firm.pricing" name="pricing" required>
+
+  <label for="phoneNumber">Broj telefona:</label>
+  <input id="phoneNumber" [(ngModel)]="firm.phoneNumber" name="phoneNumber" required>
+
+  <label for="location">Lokacija:</label>
+  <input id="location" [(ngModel)]="firm.location" name="location" required>
+
+  <label for="contactPerson">Kontakt osoba (ID):</label>
+  <input id="contactPerson" [(ngModel)]="firm.contactPerson" name="contactPerson" required>
+
+  <label for="vacationStart">Početak godišnjeg odmora:</label>
+  <input id="vacationStart" [(ngModel)]="firm.vacationPeriod.startDate" name="vacationStart" type="date" required>
+
+  <label for="vacationEnd">Kraj godišnjeg odmora:</label>
+  <input id="vacationEnd" [(ngModel)]="firm.vacationPeriod.endDate" name="vacationEnd" type="date" required>
+
+  <button type="submit">Sačuvaj firmu</button>
+
+
+  <h3>Lista dekoratera</h3>
+
+  <div *ngFor="let decorator of decoratorsList">
+    {{ decorator.firstName }} {{ decorator.lastName }} ({{ decorator.email }})
+  </div>
+  <h3>Dodaj dekoratera</h3>
+    <!-- Korisničko ime -->
+    <div class="mb-4">
+      <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Korisničko ime</label>
+      <input type="text" id="username" name="username" [(ngModel)]="newDecorator.username" required minlength="3"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+    
+    <!-- Lozinka -->
+    <div class="mb-4">
+      <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Lozinka</label>
+      <input type="password" id="password" name="password" [(ngModel)]="newDecorator.password" required pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[a-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,10}$"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+    
+    <!-- Ime -->
+    <div class="mb-4">
+      <label for="firstName" class="block text-gray-700 text-sm font-bold mb-2">Ime</label>
+      <input type="text" name="firstName" [(ngModel)]="newDecorator.firstName" required
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+    
+    <!-- Prezime -->
+    <div class="mb-4">
+      <label for="lastName" class="block text-gray-700 text-sm font-bold mb-2">Prezime</label>
+      <input type="text" name="lastName" [(ngModel)]="newDecorator.lastName" required
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Pol -->
+    <div class="mb-4">
+      <label for="gender" class="block text-gray-700 text-sm font-bold mb-2">Pol</label>
+      <select id="gender" name="gender" [(ngModel)]="newDecorator.gender" required
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        <option value="M">M</option>
+        <option value="Z">Ž</option>
+      </select>
+    </div>
+
+    <!-- Adresa -->
+    <div class="mb-4">
+      <label for="address" class="block text-gray-700 text-sm font-bold mb-2">Adresa</label>
+      <input type="text" name="address" [(ngModel)]="newDecorator.address" required
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Kontakt telefon -->
+    <div class="mb-4">
+      <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Kontakt telefon</label>
+      <input type="tel" name="phone" [(ngModel)]="newDecorator.phone" required
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Email adresa -->
+    <div class="mb-4">
+      <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email adresa</label>
+      <input type="email" name="email" [(ngModel)]="newDecorator.email" required
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Profilna slika -->
+    <div class="mb-4">
+      <label for="profilePicture" class="block text-gray-700 text-sm font-bold mb-2">Profilna slika</label>
+      <input type="file" id="profilePicture" name="profilePicture" (change)="onFileSelected($event)"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+  <button (click)="addDecorator()" type="button">Dodaj dekoratera</button>
+</form>
+

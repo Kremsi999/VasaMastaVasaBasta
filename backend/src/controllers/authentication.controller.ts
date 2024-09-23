@@ -82,7 +82,7 @@ const register = async (req: Request, res: Response) => {
 
         await newUser.save()
 
-        res.status(201).send('User registered successfully!')
+        res.status(201).json({msg: 'User registered successfully!'})
     } catch (error) {
         res.status(400).send('Error: ' + error)
     }
@@ -119,7 +119,7 @@ const login = async (req: Request, res: Response) => {
                     maxAge: 900000,
                     httpOnly: true,
                 })
-                res.status(200).send({msg: 'User logged in successfully!'})
+                res.status(200).json({data: user.type})
             } else {
                 res.status(406).send('Lozinka nije validna!')
             }

@@ -18,6 +18,11 @@ const Firm = new Schema({
     location: {
         type: String,
     },
+    contactPerson: { 
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel',
+        required: true 
+    },
     employees: [{
         type: Schema.Types.ObjectId,
         ref: 'UserModel'
@@ -33,6 +38,10 @@ const Firm = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    vacationPeriod: { 
+        startDate: { type: Date, required: true },
+        endDate: { type: Date, required: true }
     }
 })
 

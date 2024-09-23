@@ -10,11 +10,11 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   register(formData: FormData) {
-    return this.http.post(`${this.uri}/register`, formData);
+    return this.http.post<{msg: string}>(`${this.uri}/register`, formData);
   }
 
   login(loginData: {username: string, password: string}) {
-    return this.http.post(`${this.uri}/login`, loginData);
+    return this.http.post<{data: string}>(`${this.uri}/login`, loginData);
   }
 
   changePassword(changePasswordData: {username: string, password: string, newPassword: string}) {

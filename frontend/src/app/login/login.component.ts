@@ -21,7 +21,12 @@ export class LoginComponent {
       .subscribe(response => {
         localStorage.setItem('username', this.loginData.username)
         console.log('Login successful');
-        this.router.navigate(['owner'])
+        console.log(response.data)
+        if(response.data == 'Admin') {
+          this.router.navigate(['admin'])
+        }else {
+          this.router.navigate(['owner'])
+        }
       }, error => {
         console.log('Login failed', error);
       });

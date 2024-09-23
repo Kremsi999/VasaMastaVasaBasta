@@ -20,7 +20,9 @@ export class RegistrationComponent {
     phone: '',
     email: '',
     profilePicture: null,
-    creditCardNumber: ''
+    creditCardNumber: '',
+    type: '',
+    status: ''
   };
 
   captchaResolved: boolean = false;
@@ -52,6 +54,7 @@ export class RegistrationComponent {
     formData.append('email', this.user.email)
     formData.append('creditCardNumber', this.user.creditCardNumber)
     formData.append('recaptcha', this.captchaResolved.toString());
+    formData.append('type', 'Vlasnik');
 
     
     if(this.user.profilePicture)
@@ -59,7 +62,7 @@ export class RegistrationComponent {
 
     this.authService.register(formData).subscribe(
       (response) => {
-        console.log('Registration successful', response);
+        // console.log('Registration successful', response.msg);
       },
       (error) => {
         console.log('Registration failed', error);

@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import appRouter from './routes/unregisteredRouter.router';
 import ownerRouter from './routes/owner.router';
+import adminRouter from './routes/admin.router';
 dotenv.config()
 
 const app = express()
@@ -25,6 +26,7 @@ const router = express.Router()
 router.use('/auth', authRouter)
 router.use('/app', appRouter)
 router.use('/owner', ownerRouter)
+router.use('/admin', adminRouter)
 
 app.use('/', router)
 app.listen(4000, () => console.log(`Express server running on port 4000`))

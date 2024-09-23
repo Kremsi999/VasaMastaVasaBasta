@@ -8,5 +8,7 @@ export type User = {
     phone: string,
     email: string,
     profilePicture: File | null,
-    creditCardNumber: string
+    creditCardNumber: string,
+    status: string,
+    type: string
   };
