@@ -13,6 +13,7 @@ import { OwnerFirmsPageComponent } from './owner-firms-page/owner-firms-page.com
 import { FirmDetailsComponent } from './firm-details/firm-details.component';
 import { OwnerSchedulingComponent } from './owner-scheduling/owner-scheduling.component';
 import { OwnerMaintenanceComponent } from './owner-maintenance/owner-maintenance.component';
+import { DecoratorSchedulingComponent } from './decorator-scheduling/decorator-scheduling.component';
 
 const routes: Routes = [
   {path: 'register',component:  RegistrationComponent},
@@ -62,7 +63,11 @@ const routes: Routes = [
       {
         path: '',
         component: DecoratorProfileComponent
-      }
+      },
+      { 
+        path: 'sheduling', 
+        component: DecoratorSchedulingComponent 
+      },
     ]
   },
   {path: 'admin', component:  AdminAppComponent},

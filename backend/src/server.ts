@@ -8,6 +8,8 @@ import appRouter from './routes/unregisteredRouter.router';
 import ownerRouter from './routes/owner.router';
 import adminRouter from './routes/admin.router';
 import decoratorRouter from './routes/decorator.router';
+import decoratorController from './controllers/decorator.controller'
+import cron from 'node-cron'
 dotenv.config()
 
 const app = express()
@@ -29,6 +31,11 @@ router.use('/app', appRouter)
 router.use('/owner', ownerRouter)
 router.use('/admin', adminRouter)
 router.use('/decorator', decoratorRouter)
+
+cron.schedule('0 0 * * *', () => {
+    console.log('Running blockDecoratorsWithoutPhoto cron job...');
+    decoratorController.blockDecoratorsWithoutPhoto();
+});
 
 app.use('/', router)
 app.listen(4000, () => console.log(`Express server running on port 4000`))

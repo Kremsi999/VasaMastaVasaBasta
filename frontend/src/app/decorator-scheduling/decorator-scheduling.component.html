@@ -1,0 +1,45 @@
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Необрађена заказивања</h2>
+    <table class="min-w-full table-auto mb-8">
+      <thead>
+        <tr>
+          <th>Датум почетка</th>
+          <th>Башта</th>
+          <th>Акција</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of pendingJobs">
+          <td>{{ job.startDate | date }}</td>
+          <td>{{ job.gardenId.name }}</td>
+          <td>
+            <button (click)="confirmJob(job._id)" class="bg-green-500 text-white px-4 py-2">Потврди</button>
+            <button (click)="rejectJob(job._id)" class="bg-red-500 text-white px-4 py-2">Одбиј</button>
+            <textarea [(ngModel)]="comment" placeholder="Коментар"></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <h2 class="text-2xl font-bold mb-4">Потврђена заказивања</h2>
+    <table class="min-w-full table-auto mb-8">
+      <thead>
+        <tr>
+          <th>Датум почетка</th>
+          <th>Башта</th>
+          <th>Акција</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of confirmedJobs">
+          <td>{{ job.startDate | date }}</td>
+          <td>{{ job.gardenId.name }}</td>
+          <td>
+            <input type="file" (change)="onFileSelected($event)" />
+            <button (click)="completeJob(job._id)" class="bg-blue-500 text-white px-4 py-2">Потврди завршетак</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

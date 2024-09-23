@@ -26,7 +26,7 @@ const Job = new Schema({
       },
       status: {
         type: String,
-        enum: ['Pending', 'Confirmed', 'Completed', 'Cancelled', 'inMaintenance'],
+        enum: ['Pending', 'Confirmed', 'Completed', 'Cancelled', 'inMaintenance', 'Rejected'],
         default: 'Pending'
       },
       description: {
@@ -42,6 +42,13 @@ const Job = new Schema({
       },
       isMaintenance: {
         type: Boolean
+      },
+      photo: {
+        data: Buffer,
+        contentType: String,
+      },
+      rejectionComment: {
+        type: String
       }
 })
 

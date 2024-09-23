@@ -21,6 +21,7 @@ import { FirmDetailsComponent } from './firm-details/firm-details.component';
 import { WizardJobComponent } from './wizard-job/wizard-job.component';
 import { OwnerSchedulingComponent } from './owner-scheduling/owner-scheduling.component';
 import { OwnerMaintenanceComponent } from './owner-maintenance/owner-maintenance.component';
+import { DecoratorSchedulingComponent } from './decorator-scheduling/decorator-scheduling.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { OwnerMaintenanceComponent } from './owner-maintenance/owner-maintenance
     FirmDetailsComponent,
     WizardJobComponent,
     OwnerSchedulingComponent,
-    OwnerMaintenanceComponent
+    OwnerMaintenanceComponent,
+    DecoratorSchedulingComponent
   ],
   imports: [
     BrowserModule,

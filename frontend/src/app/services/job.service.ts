@@ -7,6 +7,7 @@ import { Comment } from '../models/Comment';
 })
 export class JobService {
   private uri = 'http://localhost:4000/owner';
+  private decoratorUri = 'http://localhost:4000/decorator';
 
   constructor(private http: HttpClient) {}
 
@@ -44,5 +45,25 @@ export class JobService {
 
   scheduleMaintenance(jobId: string){
     return this.http.post(`${this.uri}/scheduleMaintenance`, { jobId });
+  }
+
+  getPendingJobs(username: string){
+    return this.http.post<any>(`${this.decoratorUri}/getPendingJobs`, {username});
+  }
+
+  acceptJob(jobId: string, username: string){
+    return this.http.post<any>(`${this.decoratorUri}/acceptJob`, { jobId, username });
+  }
+
+  rejectJob(jobId: string, comment: string){
+    return this.http.post<any>(`${this.decoratorUri}/rejectJob`, { comment, jobId });
+  }
+
+  completeJob(formData: FormData){
+    return this.http.post<any>(`${this.decoratorUri}/completeJob`, formData);
+  }
+
+  getConfirmedJobs(username: string) {
+    return this.http.post<any>(`${this.decoratorUri}/confirmedJobsForDecorator`, {username});
   }
 }
