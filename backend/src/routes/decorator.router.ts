@@ -29,4 +29,10 @@ decoratorRouter.post('/acceptPendingJobsForMaintenance', (req, res) => Decorator
 
 decoratorRouter.post('/rejectPendingJobsForMaintenance', (req, res) => Decorator.rejectPendingJobsForMaintenance(req, res))
 
+decoratorRouter.post('/numberOfJobsByMonthForDecorator', (req, res) => Decorator.numberOfJobsByMonthForDecorator(req, res))
+
+decoratorRouter.post('/jobWeightBetweenDecorators', (req, res) => Decorator.jobWeightBetweenDecorators(req, res))
+
+decoratorRouter.post('/averageDaysForJobByDecorator', (req, res) => Decorator.averageDaysForJobByDecorator(req, res))
+
 export default decoratorRouter

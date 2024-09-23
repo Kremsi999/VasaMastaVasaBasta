@@ -15,6 +15,7 @@ import { OwnerSchedulingComponent } from './owner-scheduling/owner-scheduling.co
 import { OwnerMaintenanceComponent } from './owner-maintenance/owner-maintenance.component';
 import { DecoratorSchedulingComponent } from './decorator-scheduling/decorator-scheduling.component';
 import { DecoratorMaintenanceComponent } from './decorator-maintenance/decorator-maintenance.component';
+import { DecoratorStatsComponent } from './decorator-stats/decorator-stats.component';
 
 const routes: Routes = [
   {path: 'register',component:  RegistrationComponent},
@@ -72,6 +73,10 @@ const routes: Routes = [
       { 
         path: 'maintenance', 
         component: DecoratorMaintenanceComponent 
+      },
+      { 
+        path: 'stats', 
+        component: DecoratorStatsComponent 
       }
     ]
   },

@@ -23,6 +23,9 @@ import { OwnerSchedulingComponent } from './owner-scheduling/owner-scheduling.co
 import { OwnerMaintenanceComponent } from './owner-maintenance/owner-maintenance.component';
 import { DecoratorSchedulingComponent } from './decorator-scheduling/decorator-scheduling.component';
 import { DecoratorMaintenanceComponent } from './decorator-maintenance/decorator-maintenance.component';
+import { DecoratorStatsComponent } from './decorator-stats/decorator-stats.component';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { DecoratorMaintenanceComponent } from './decorator-maintenance/decorator
     OwnerSchedulingComponent,
     OwnerMaintenanceComponent,
     DecoratorSchedulingComponent,
-    DecoratorMaintenanceComponent
+    DecoratorMaintenanceComponent,
+    DecoratorStatsComponent
   ],
   imports: [
     BrowserModule,

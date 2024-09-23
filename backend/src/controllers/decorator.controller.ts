@@ -218,6 +218,75 @@ const rejectPendingJobsForMaintenance = async(req: Request, res: Response) => {
   }
 }
 
+const numberOfJobsByMonthForDecorator = async(req: Request, res: Response) => {
+  try {
+    const user = await UserModel.findOne({username: req.body.username})
+    const jobs = await JobModel.aggregate([
+      { $match: { decoratorId: user?._id, status: 'Completed' }},
+      {
+        $group: {
+          _id: { year: { $year: "$startDate" }, month: { $month: "$startDate" } },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1 }}
+    ]);
+
+    res.status(200).json(jobs);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+}
+
+const jobWeightBetweenDecorators = async(req: Request, res: Response) => {
+  try {
+    const user = await UserModel.findOne({username: req.body.username})
+    const firm = await FirmModel.findOne({employees: {$in: [user?._id]}})
+    const distribution = await JobModel.aggregate([
+      { $match: { firmId: firm?._id, status: 'Completed' }},
+      {
+        $group: {
+          _id: "$decoratorId",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'decorator'
+        }
+      }
+    ]);
+
+    res.status(200).json(distribution);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+}
+
+const averageDaysForJobByDecorator = async(req: Request, res: Response) => {
+  try {
+    const user = await UserModel.findOne({username: req.body.username})
+
+    const weeklyData = await JobModel.aggregate([
+      { $match: { decoratorId: user?._id, status: 'Completed', startDate: { $gte: new Date(new Date().setFullYear(new Date().getFullYear() - 2)) } }},
+      {
+        $group: {
+          _id: { dayOfWeek: { $dayOfWeek: "$startDate" }},
+          averageJobs: { $avg: 1 }
+        }
+      },
+      { $sort: { "_id.dayOfWeek": 1 }}
+    ]);
+
+    res.status(200).json(weeklyData);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+}
+
 
 export default {
     getUserInfo,
@@ -230,5 +299,8 @@ export default {
     confirmedJobsForDecorator,
     getPendingJobsForMaintenance,
     acceptPendingJobsForMaintenance,
-    rejectPendingJobsForMaintenance
+    rejectPendingJobsForMaintenance,
+    numberOfJobsByMonthForDecorator,
+    jobWeightBetweenDecorators,
+    averageDaysForJobByDecorator
 }
