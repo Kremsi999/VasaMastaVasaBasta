@@ -25,6 +25,7 @@ import { DecoratorSchedulingComponent } from './decorator-scheduling/decorator-s
 import { DecoratorMaintenanceComponent } from './decorator-maintenance/decorator-maintenance.component';
 import { DecoratorStatsComponent } from './decorator-stats/decorator-stats.component';
 import { NgChartsModule } from 'ng2-charts';
+import { CanvasComponent } from './canvas/canvas.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { NgChartsModule } from 'ng2-charts';
     OwnerMaintenanceComponent,
     DecoratorSchedulingComponent,
     DecoratorMaintenanceComponent,
-    DecoratorStatsComponent
+    DecoratorStatsComponent,
+    CanvasComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OwnerFirmsService } from '../services/owner-firms.service';
+import { Comment } from '../models/Comment';
 
 @Component({
   selector: 'app-firm-details',
@@ -9,7 +10,7 @@ import { OwnerFirmsService } from '../services/owner-firms.service';
 })
 export class FirmDetailsComponent {
   firm: any;
-  comments: any;
+  comments: Comment[] = [];
   showWizard: boolean = false
 
   constructor(private route: ActivatedRoute, private firmService: OwnerFirmsService) {}

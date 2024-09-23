@@ -33,6 +33,10 @@ ownerRouter.post('/getActiveMaintenanceJobs', (req, res) => Owner.getActiveJobsF
 
 ownerRouter.post('/scheduleMaintenance', (req, res) => Owner.scheduleMaintenance(req, res))
 
+ownerRouter.post('/createJob', (req, res) => Owner.createJob(req, res))
+
+ownerRouter.post('/garden', (req, res) => Owner.createGarden(req, res))
+
 
 
 export default ownerRouter

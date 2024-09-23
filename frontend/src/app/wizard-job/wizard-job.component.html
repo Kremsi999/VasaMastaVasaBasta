@@ -77,6 +77,13 @@
           <label class="block text-gray-700 text-sm font-bold mb-2">Додатни опис:</label>
           <textarea formControlName="description" placeholder="Унесите додатни опис или захтеве" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
         </div>
+        <div *ngFor="let service of services">
+          <label>
+            <input type="checkbox" (change)="onCheckboxChange(service, $event)">
+            {{ service }}
+          </label>
+        </div>
+        <app-canvas></app-canvas>
   
         <div class="flex justify-between">
           <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="previousStep()">

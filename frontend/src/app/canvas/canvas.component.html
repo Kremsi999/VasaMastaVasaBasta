@@ -1,0 +1,10 @@
+<div class="container">
+    <h2>Garden Layout</h2>
+    <canvas #gardenCanvas width="800" height="400" style="border: 1px solid #000"></canvas>
+  
+    <!-- Учитавање JSON фајла -->
+    <div class="mt-4">
+      <label for="fileInput">Учитај JSON фајл:</label>
+      <input type="file" id="fileInput" (change)="onFileLoad($event)">
+    </div>
+  </div>

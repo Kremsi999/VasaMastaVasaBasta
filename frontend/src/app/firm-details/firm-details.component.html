@@ -20,7 +20,7 @@
     <h3 class="text-xl mt-4">Коментари</h3>
     <ul>
       <li *ngFor="let comment of comments">
-        <strong>{{ comment.user }}:</strong> {{ comment.comment }} ({{ comment.rating }} / 5)
+        {{ comment.text }} ({{ comment.rating }} / 5)
       </li>
     </ul>
   
@@ -30,6 +30,6 @@
     <button (click)="zakazi()" *ngIf="showWizard == false">Zakazi uredjivanje</button>
     <button (click)="otkazi()" *ngIf="showWizard">Otkazi</button>
     <div *ngIf="showWizard">
-        <app-wizard-job></app-wizard-job>
+        <app-wizard-job [services]="firm.services" [firmId]="firm._id"></app-wizard-job>
     </div>
 </div>

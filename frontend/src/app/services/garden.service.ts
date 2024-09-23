@@ -10,6 +10,9 @@ export class GardenService {
   constructor(private http: HttpClient) {}
 
   createGarden(gardenData: any){
-    return this.http.post(`${this.uri}`, gardenData);
+    return this.http.post(`${this.uri}/garden`, gardenData);
+  }
+  createJob(gardenData: any){
+    return this.http.post(`${this.uri}/createJob`, gardenData);
   }
 }

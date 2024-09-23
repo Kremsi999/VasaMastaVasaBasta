@@ -236,6 +236,53 @@ const scheduleMaintenance =  async(req: Request, res: Response) => {
       }
 }
 
+const createGarden = async(req: Request, res: Response) => {
+  try {
+    const user = await UserModel.findOne({username: req.body.username})
+    const newGarden = new GardenModel({
+      ownerId: user?._id,
+      name: req.body.name,
+      area: {
+        total: req.body.total,
+        pool: req.body.pool,
+        greenery: req.body.greenery,
+        tables: req.body.tables,
+        chairs: req.body.chairs,
+        fountaion: req.body.fountaion
+      },
+      layout: req.body.layout,
+      type: req.body.type,
+      services: req.body.services
+    });
+
+    const savedGarden = await newGarden.save();
+    res.status(201).json(savedGarden);
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+}
+
+const createJob = async(req:Request, res:Response) => {
+  try {
+    const user = await UserModel.findOne({username: req.body.username})
+    console.log(user?._id)
+    console.log(req.body.name)
+    const garden = await GardenModel.findOne({ownerId: user?._id, name: req.body.name})
+    console.log(garden)
+    const job = new JobModel({
+      status: 'Pending',
+      gardenId: garden?._id,
+      firmId: req.body.firmId,
+      startDate: new Date(),
+      inMaintenance: false,
+    });
+    const savedJob = await job.save();
+    res.status(201).json(savedJob);
+  } catch (err) {
+    res.status(500).json({ message: 'Error scheduling job', error: err });
+  }
+}
+
 
 export default {
     getUserInfo,
@@ -249,5 +296,7 @@ export default {
     getComments,
     getCompletedJobsForMaintenance,
     getActiveJobsForMaintenance,
-    scheduleMaintenance
+    scheduleMaintenance,
+    createGarden, 
+    createJob
 }
