@@ -23,4 +23,10 @@ decoratorRouter.post('/completeJob',  upload.single('photo'), (req, res) => Deco
 
 decoratorRouter.post('/confirmedJobsForDecorator', (req, res) => Decorator.confirmedJobsForDecorator(req, res))
 
+decoratorRouter.post('/getPendingJobsForMaintenance', (req, res) => Decorator.getPendingJobsForMaintenance(req, res))
+
+decoratorRouter.post('/acceptPendingJobsForMaintenance', (req, res) => Decorator.acceptPendingJobsForMaintenance(req, res))
+
+decoratorRouter.post('/rejectPendingJobsForMaintenance', (req, res) => Decorator.rejectPendingJobsForMaintenance(req, res))
+
 export default decoratorRouter

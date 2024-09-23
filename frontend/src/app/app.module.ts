@@ -22,6 +22,7 @@ import { WizardJobComponent } from './wizard-job/wizard-job.component';
 import { OwnerSchedulingComponent } from './owner-scheduling/owner-scheduling.component';
 import { OwnerMaintenanceComponent } from './owner-maintenance/owner-maintenance.component';
 import { DecoratorSchedulingComponent } from './decorator-scheduling/decorator-scheduling.component';
+import { DecoratorMaintenanceComponent } from './decorator-maintenance/decorator-maintenance.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DecoratorSchedulingComponent } from './decorator-scheduling/decorator-s
     WizardJobComponent,
     OwnerSchedulingComponent,
     OwnerMaintenanceComponent,
-    DecoratorSchedulingComponent
+    DecoratorSchedulingComponent,
+    DecoratorMaintenanceComponent
   ],
   imports: [
     BrowserModule,

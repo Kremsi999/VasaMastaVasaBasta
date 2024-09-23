@@ -1,0 +1,27 @@
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Захтеви за одржавање</h2>
+  
+    <div *ngFor="let job of maintenanceRequests" class="border border-gray-300 rounded-lg p-4 mb-6 shadow-lg">
+      <div class="flex justify-between items-center">
+        <div>
+          <h3 class="text-lg font-semibold">Башта: {{ job.gardenId.name }}</h3>
+          <p class="text-gray-600">Фирма: {{ job.firmId.name }}</p>
+          <p class="text-gray-600">Датум почетка: {{ job.startDate | date }}</p>
+        </div>
+        <div>
+          <!-- Време завршетка -->
+            <label class="block text-gray-700 font-bold mb-2">Процењено време завршетка</label>
+            <input type="datetime-local"   
+            [(ngModel)]="endDate"
+            class="border border-gray-300 p-2 rounded-md mb-2 w-full" />
+        </div>
+      </div>
+  
+      <!-- Акције -->
+      <div class="flex justify-end mt-4">
+        <button (click)="confirmMaintenance(job._id)" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mr-2">Потврди</button>
+        <button (click)="rejectMaintenance(job._id, 'Разлог за одбијање')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">Одбиј</button>
+      </div>
+    </div>
+  </div>
+  

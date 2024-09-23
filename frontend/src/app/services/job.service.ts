@@ -66,4 +66,16 @@ export class JobService {
   getConfirmedJobs(username: string) {
     return this.http.post<any>(`${this.decoratorUri}/confirmedJobsForDecorator`, {username});
   }
+
+  getMaintenanceRequests(username: string){
+    return this.http.post<any>(`${this.decoratorUri}/getPendingJobsForMaintenance`, {username});
+  }
+
+  confirmMaintenance(jobId: string, endDate: string) {
+    return this.http.post<any>(`${this.decoratorUri}/acceptPendingJobsForMaintenance`, { endDate, jobId });
+  }
+
+  rejectMaintenance(jobId: string, comment: string) {
+    return this.http.post<any>(`${this.decoratorUri}/rejectPendingJobsForMaintenance`, { comment, jobId });
+  }
 }

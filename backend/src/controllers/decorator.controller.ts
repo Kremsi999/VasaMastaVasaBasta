@@ -164,6 +164,60 @@ const blockDecoratorsWithoutPhoto = async () => {
   });
 };
 
+const getPendingJobsForMaintenance = async(req: Request, res: Response) => {
+  try {
+    const user = await UserModel.findOne({username: req.body.username})
+    const firm = await FirmModel.findOne({employees: {$in: [user?._id]}})
+    const maintenanceRequests = await JobModel.find({ firmId: firm?._id,
+      status: 'Pending',
+      isMaintenance: true
+    }).populate('firmId').populate('gardenId');
+
+    res.status(200).json(maintenanceRequests);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+}
+
+const acceptPendingJobsForMaintenance = async(req: Request, res: Response) => {
+  try {
+    const { endDate } = req.body.endDate;
+    const job = await JobModel.findById(req.body.jobId);
+    console.log(endDate)
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    job.status = 'Confirmed';
+    job.endDate = new Date(req.body.endDate); 
+    await job.save();
+
+    res.status(200).json({ job });
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: error });
+  }
+}
+
+const rejectPendingJobsForMaintenance = async(req: Request, res: Response) => {
+  try {
+    const { comment } = req.body.comment;
+    const job = await JobModel.findById(req.body.jobId);
+
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    job.status = 'Rejected';
+    job.rejectionComment = comment;
+    await job.save();
+
+    res.status(200).json({ job });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+}
+
 
 export default {
     getUserInfo,
@@ -173,5 +227,8 @@ export default {
     rejectJob,
     completeJob,
     blockDecoratorsWithoutPhoto,
-    confirmedJobsForDecorator
+    confirmedJobsForDecorator,
+    getPendingJobsForMaintenance,
+    acceptPendingJobsForMaintenance,
+    rejectPendingJobsForMaintenance
 }
