@@ -12,6 +12,7 @@ import { DecoratorProfileComponent } from './decorator-profile/decorator-profile
 import { OwnerFirmsPageComponent } from './owner-firms-page/owner-firms-page.component';
 import { FirmDetailsComponent } from './firm-details/firm-details.component';
 import { OwnerSchedulingComponent } from './owner-scheduling/owner-scheduling.component';
+import { OwnerMaintenanceComponent } from './owner-maintenance/owner-maintenance.component';
 
 const routes: Routes = [
   {path: 'register',component:  RegistrationComponent},
@@ -42,6 +43,10 @@ const routes: Routes = [
       { 
         path: 'sheduling', 
         component: OwnerSchedulingComponent 
+      },
+      { 
+        path: 'maintenance', 
+        component: OwnerMaintenanceComponent 
       }
 
     ]

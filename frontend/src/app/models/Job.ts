@@ -11,5 +11,6 @@ export type Job = {
     status: string,
     description: string,
     createdAt: Date,
-    updatedAt: Date
+    updatedAt: Date,
+    isMaintenance: boolean
 }

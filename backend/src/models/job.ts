@@ -26,7 +26,7 @@ const Job = new Schema({
       },
       status: {
         type: String,
-        enum: ['Pending', 'Confirmed', 'Completed', 'Cancelled'],
+        enum: ['Pending', 'Confirmed', 'Completed', 'Cancelled', 'inMaintenance'],
         default: 'Pending'
       },
       description: {
@@ -39,6 +39,9 @@ const Job = new Schema({
       updatedAt: {
         type: Date,
         default: Date.now
+      },
+      isMaintenance: {
+        type: Boolean
       }
 })
 

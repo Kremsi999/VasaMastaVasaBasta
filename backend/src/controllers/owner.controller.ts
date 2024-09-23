@@ -73,7 +73,8 @@ const getCurrentJobs = async(req: Request, res: Response) => {
         const gardens = await GardenModel.find({ownerId: user?._id})
         const currentJobs = await JobModel.find({
           gardenId:{$in: gardens.map(garden => garden._id)}, 
-          status: { $in: ['Pending', 'Confirmed'] } 
+          status: { $in: ['Pending', 'Confirmed'] } ,
+          isMaintenance: false
         }).populate('firmId').populate('gardenId').populate('decoratorId');
     
         res.status(200).json(currentJobs);
@@ -88,7 +89,8 @@ const getArchivedJobs = async(req: Request, res: Response) => {
         const gardens = await GardenModel.find({ownerId: user?._id})
         const archivedJobs = await JobModel.find({
             gardenId:{$in: gardens.map(garden => garden._id)}, 
-            status: 'Completed' 
+            status: 'Completed',
+            isMaintenance: false 
         }).populate('firmId').populate('gardenId').populate('decoratorId').sort({ endDate: -1 });;
     
         res.status(200).json(archivedJobs);
@@ -153,6 +155,88 @@ const getComments = async(req: Request, res: Response) => {
     }
 }
 
+const getCompletedJobsForMaintenance =  async(req: Request, res: Response) => {
+    try {
+        const user = await UserModel.findOne({username: req.body.username})
+        const gardens = await GardenModel.find({ownerId: user?._id})
+
+        const completedJobs = await JobModel.find({
+          gardenId: {$in: gardens.map(garden => garden._id)},
+          status: 'Completed',
+          endDate: {$lt: new Date().setMonth(new Date().getMonth()- 6)}
+        }).populate('firmId').populate('gardenId');
+        const completedMaintenanceJobs = await JobModel.find({
+            gardenId: {$in: gardens.map(garden => garden._id)},
+            status: 'Completed',
+            endDate: {$lt: new Date().setMonth(new Date().getMonth()- 6)}, 
+            isMaintenance: false
+          }).populate('firmId').populate('gardenId');
+          completedJobs.concat(completedMaintenanceJobs)
+        res.status(200).json(completedJobs);
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+}
+
+const getActiveJobsForMaintenance =  async(req: Request, res: Response) => {
+    try {
+        const user = await UserModel.findOne({username: req.body.username})
+        const gardens = await GardenModel.find({ownerId: user?._id})
+
+        const activeMaintenance = await JobModel.find({
+          gardenId: {$in: gardens.map(garden => garden._id)},
+          status: { $in: ['Pending', 'Confirmed'] } ,
+          isMaintenance: true,
+        }).populate('firmId').populate('gardenId');
+    
+        res.status(200).json(activeMaintenance);
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+}
+
+const scheduleMaintenance =  async(req: Request, res: Response) => {
+    try {
+        const { jobId } = req.body;
+    
+        const job = await JobModel.findById(jobId);
+    
+        if (!job) {
+          return res.status(404).json({ message: 'Job not found' });
+        }
+        const garden = await GardenModel.findById(job.gardenId);
+        const hasWaterFeatures = (garden?.area?.pool ?? 0) > 0 || (garden?.area?.fountaion ?? 0) > 0;
+        if (!hasWaterFeatures) {
+          return res.status(400).json({ message: 'Ова башта нема водене површине за сервисирање' });
+        }
+    
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+    
+        if (new Date(job?.endDate ?? new Date()) >= sixMonthsAgo) {
+          return res.status(400).json({ message: 'Није прошло довољно времена за сервисирање' });
+        }
+    
+        const maintenanceJob = new JobModel({
+          gardenId: job.gardenId,
+          firmId: job.firmId,
+          startDate: new Date(),
+          status: 'Pending',
+          description: 'Servisiranje vodienih povrsina',
+          isMaintenance: true,
+          endDate: new Date(),
+          decoratorId: job.decoratorId
+        });
+    
+        await maintenanceJob.save();
+    
+        res.status(201).json({ maintenanceJob });
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+}
+
+
 export default {
     getUserInfo,
     updateUserInfo,
@@ -162,5 +246,8 @@ export default {
     getArchivedJobs,
     addComment,
     cancelJob,
-    getComments
+    getComments,
+    getCompletedJobsForMaintenance,
+    getActiveJobsForMaintenance,
+    scheduleMaintenance
 }

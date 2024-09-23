@@ -33,7 +33,6 @@ export class OwnerSchedulingComponent implements OnInit {
     this.jobService.getCurrentJobs(this.username).subscribe(data => {
       this.currentJobs = data;
       
-      // Прођите кроз сваки посао и преузмите коментаре и фирме
       this.currentJobs.forEach(el => {
         this.getComments(el._id).subscribe((commentsData) => {
           this.commentsMap.set(el._id, commentsData);
@@ -51,7 +50,6 @@ export class OwnerSchedulingComponent implements OnInit {
     this.jobService.getPastJobs(this.username).subscribe(data => {
       this.pastJobs = data;
 
-      // Прођите кроз сваки посао из прошлости и преузмите коментаре и фирме
       this.pastJobs.forEach(el => {
         this.getComments(el._id).subscribe((commentsData) => {
           this.commentsMap.set(el._id, commentsData);

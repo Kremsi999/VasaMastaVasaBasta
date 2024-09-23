@@ -8,7 +8,7 @@ export type Garden = {
         greenery: number;
         tables: number;
         chairs: number;
-        fountaion: number;
+        fountain: number;
     };
     layout: Array<{
         shapeType: 'square' | 'rectangle' | 'circle';

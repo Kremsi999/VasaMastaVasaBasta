@@ -27,4 +27,12 @@ ownerRouter.post('/getComments', (req, res) => Owner.getComments(req, res))
 
 ownerRouter.delete('/delete/:id', (req, res) => Owner.cancelJob(req, res))
 
+ownerRouter.post('/getCompletedJobs', (req, res) => Owner.getCompletedJobsForMaintenance(req, res))
+
+ownerRouter.post('/getActiveMaintenanceJobs', (req, res) => Owner.getActiveJobsForMaintenance(req, res))
+
+ownerRouter.post('/scheduleMaintenance', (req, res) => Owner.scheduleMaintenance(req, res))
+
+
+
 export default ownerRouter

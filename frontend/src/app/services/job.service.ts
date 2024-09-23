@@ -33,4 +33,16 @@ export class JobService {
   getComments(id: string){
     return this.http.post<Comment[]>(`${this.uri}/getComments`, { id });
   }
+
+  getCompletedJobs(username: string) {
+    return this.http.post<any>(`${this.uri}/getCompletedJobs`, {username});
+  }
+
+  getActiveMaintenance(username: string){
+    return this.http.post<any>(`${this.uri}/getActiveMaintenanceJobs`, {username});
+  }
+
+  scheduleMaintenance(jobId: string){
+    return this.http.post(`${this.uri}/scheduleMaintenance`, { jobId });
+  }
 }

@@ -1,0 +1,50 @@
+<div class="container mx-auto p-4">
+    <!-- Завршени послови -->
+    <h2 class="text-2xl font-bold mb-4">Завршени послови</h2>
+    <table class="min-w-full table-auto mb-8">
+      <thead>
+        <tr>
+          <th>Датум завршетка</th>
+          <th>Број базена/фонтана</th>
+          <th>Фирма</th>
+          <th>Сервисирање</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of completedJobs">
+          <td>{{ job.endDate | date }}</td>
+          <td>{{ job.gardenId.area.pool + job.gardenId.area.fountain }}</td>
+          <td>{{ job.firmId.name }}</td>
+          <td>
+            <button class="bg-blue-500 text-white px-4 py-2" 
+                    *ngIf="isSixMonthsOrMore(job.endDate)" 
+                    (click)="scheduleMaintenance(job._id)">
+              Закажи сервисирање
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Активно одржавање -->
+    <h2 class="text-2xl font-bold mb-4">Тренутни процеси одржавања</h2>
+    <table class="min-w-full table-auto mb-8">
+      <thead>
+        <tr>
+          <th>Датум почетка</th>
+          <th>Фирма</th>
+          <th>Број базена/фонтана</th>
+          <th>Статус</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of activeMaintenance">
+          <td>{{ job.startDate | date }}</td>
+          <td>{{ job.firmId.name }}</td>
+          <td>{{ job.gardenId.area.pool + job.gardenId.area.fountain }}</td>
+          <td>{{ job.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
