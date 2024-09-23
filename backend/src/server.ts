@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 import appRouter from './routes/unregisteredRouter.router';
 import ownerRouter from './routes/owner.router';
 import adminRouter from './routes/admin.router';
+import decoratorRouter from './routes/decorator.router';
 dotenv.config()
 
 const app = express()
@@ -27,6 +28,7 @@ router.use('/auth', authRouter)
 router.use('/app', appRouter)
 router.use('/owner', ownerRouter)
 router.use('/admin', adminRouter)
+router.use('/decorator', decoratorRouter)
 
 app.use('/', router)
 app.listen(4000, () => console.log(`Express server running on port 4000`))

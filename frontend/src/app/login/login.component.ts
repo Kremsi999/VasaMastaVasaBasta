@@ -24,8 +24,10 @@ export class LoginComponent {
         console.log(response.data)
         if(response.data == 'Admin') {
           this.router.navigate(['admin'])
-        }else {
+        }else if(response.data == 'Vlasnik') {
           this.router.navigate(['owner'])
+        } else {
+          this.router.navigate(['decorator'])
         }
       }, error => {
         console.log('Login failed', error);

@@ -13,4 +13,8 @@ ownerRouter.put('/profile', upload.single('profilePicture'), (req, res) =>
     Owner.updateUserInfo(req, res)
 )
 
+ownerRouter.post('/getFirms', (req, res) => Owner.getFirms(req, res))
+
+ownerRouter.post('/getFirmDetails', (req, res) => Owner.getFirmDetails(req, res))
+
 export default ownerRouter

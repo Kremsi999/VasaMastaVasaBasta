@@ -8,6 +8,9 @@ import { OwnerAppComponent } from './owner-app/owner-app.component';
 import { DekoratorAppComponent } from './dekorator-app/dekorator-app.component';
 import { AdminAppComponent } from './admin-app/admin-app.component';
 import { OwnerProfileComponent } from './owner-profile/owner-profile.component';
+import { DecoratorProfileComponent } from './decorator-profile/decorator-profile.component';
+import { OwnerFirmsPageComponent } from './owner-firms-page/owner-firms-page.component';
+import { FirmDetailsComponent } from './firm-details/firm-details.component';
 
 const routes: Routes = [
   {path: 'register',component:  RegistrationComponent},
@@ -26,10 +29,32 @@ const routes: Routes = [
       {
         path: '',
         component: OwnerProfileComponent
+      },
+      {
+        path: 'firms',
+        component: OwnerFirmsPageComponent
+      },
+      { 
+        path: 'firms/:id', 
+        component: FirmDetailsComponent 
+      }
+
+    ]
+  },
+  {
+    path: 'decorator', 
+    component:  DekoratorAppComponent,
+    children : [
+      {
+        path: 'profile',
+        component: DecoratorProfileComponent
+      },
+      {
+        path: '',
+        component: DecoratorProfileComponent
       }
     ]
   },
-  {path: 'decorator', component:  DekoratorAppComponent},
   {path: 'admin', component:  AdminAppComponent},
 ];
 

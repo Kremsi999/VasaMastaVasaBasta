@@ -15,6 +15,9 @@ import { OwnerProfileComponent } from './owner-profile/owner-profile.component';
 import { OwnerAppComponent } from './owner-app/owner-app.component';
 import { DekoratorAppComponent } from './dekorator-app/dekorator-app.component';
 import { AdminAppComponent } from './admin-app/admin-app.component';
+import { DecoratorProfileComponent } from './decorator-profile/decorator-profile.component';
+import { OwnerFirmsPageComponent } from './owner-firms-page/owner-firms-page.component';
+import { FirmDetailsComponent } from './firm-details/firm-details.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { AdminAppComponent } from './admin-app/admin-app.component';
     OwnerProfileComponent,
     OwnerAppComponent,
     DekoratorAppComponent,
-    AdminAppComponent
+    AdminAppComponent,
+    DecoratorProfileComponent,
+    OwnerFirmsPageComponent,
+    FirmDetailsComponent
   ],
   imports: [
     BrowserModule,

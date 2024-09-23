@@ -1,0 +1,37 @@
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Firme</h1>
+  
+    <input type="text" placeholder="Pretraži firme..." (input)="searchFirms($event)" class="p-2 border border-gray-300 rounded mb-4">
+  
+    <table class="min-w-full table-auto border-collapse border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="py-2 px-4 text-left cursor-pointer" (click)="sortFirms('name')">Naziv</th>
+          <th class="py-2 px-4 text-left cursor-pointer" (click)="sortFirms('address')">Adresa</th>
+          <th class="border border-gray-300 p-2">Prosecna ocena</th>
+          <th class="border border-gray-300 p-2">Zaposleni</th>
+          <th class="border border-gray-300 p-2">Detalji</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let firm of firms" class="hover:bg-gray-50">
+          <td class="border border-gray-300 p-2">{{ firm.name }}</td>
+          <td class="border border-gray-300 p-2">{{ firm.address }}</td>
+          <td class="border border-gray-300 p-2">
+            <span *ngFor="let star of getStars(firm.averageRating)">
+              <span [ngClass]="star ? 'text-yellow-400' : 'text-gray-300'">&#9733;</span>
+            </span>
+            ({{ firm.averageRating }} / 5)
+          </td>
+          <td class="py-2 px-4">
+            <ul>
+              <li *ngFor="let employee of firm.employees">{{ employee.firstName }} {{ employee.lastName }}</li>
+            </ul>
+          </td>
+          <td class="border border-gray-300 p-2">
+            <a [routerLink]="['/owner/firms', firm._id]" class="text-blue-500 hover:underline">Detalji</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
