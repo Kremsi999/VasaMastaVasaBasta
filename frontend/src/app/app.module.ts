@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaModule } from 'ng-recaptcha';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { RegistrationComponent } from './registration/registration.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,6 +18,8 @@ import { AdminAppComponent } from './admin-app/admin-app.component';
 import { DecoratorProfileComponent } from './decorator-profile/decorator-profile.component';
 import { OwnerFirmsPageComponent } from './owner-firms-page/owner-firms-page.component';
 import { FirmDetailsComponent } from './firm-details/firm-details.component';
+import { WizardJobComponent } from './wizard-job/wizard-job.component';
+import { OwnerSchedulingComponent } from './owner-scheduling/owner-scheduling.component';
 
 @NgModule({
   declarations: [
@@ -32,14 +34,17 @@ import { FirmDetailsComponent } from './firm-details/firm-details.component';
     AdminAppComponent,
     DecoratorProfileComponent,
     OwnerFirmsPageComponent,
-    FirmDetailsComponent
+    FirmDetailsComponent,
+    WizardJobComponent,
+    OwnerSchedulingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RecaptchaModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

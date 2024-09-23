@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 import UserModel from '../models/user'
 import FirmModel from '../models/firm'
 import CommentModel from '../models/comment'
+import JobModel from '../models/job'
+import GardenModel from '../models/garden'
 
 
 const getUserInfo = async(req: Request, res: Response) => {
@@ -65,10 +67,100 @@ const getFirmDetails = async(req: Request, res: Response) => {
         res.status(500).json({ message: 'Greska pri preuzimanju firmi' + err});
     }
 }
+const getCurrentJobs = async(req: Request, res: Response) => {
+    try {
+        const user = await UserModel.findOne({username: req.body.username})
+        const gardens = await GardenModel.find({ownerId: user?._id})
+        const currentJobs = await JobModel.find({
+          gardenId:{$in: gardens.map(garden => garden._id)}, 
+          status: { $in: ['Pending', 'Confirmed'] } 
+        }).populate('firmId').populate('gardenId').populate('decoratorId');
+    
+        res.status(200).json(currentJobs);
+      } catch (error) {
+        res.status(500).json({ message: error});
+      }
+}
+
+const getArchivedJobs = async(req: Request, res: Response) => {
+    try {
+        const user = await UserModel.findOne({username: req.body.username})
+        const gardens = await GardenModel.find({ownerId: user?._id})
+        const archivedJobs = await JobModel.find({
+            gardenId:{$in: gardens.map(garden => garden._id)}, 
+            status: 'Completed' 
+        }).populate('firmId').populate('gardenId').populate('decoratorId').sort({ endDate: -1 });;
+    
+        res.status(200).json(archivedJobs);
+      } catch (error) {
+        res.status(500).json({ message: error});
+      }
+}
+
+const addComment = async(req: Request, res: Response) => {
+    try {
+        const { rating, comment, id, username } = req.body;
+        const job = await JobModel.findById(id);
+
+        if (job!.status !== 'Completed') {
+            return res.status(400).json({ message: 'Само завршени послови могу бити оцењени.' });
+        }
+        const user = await UserModel.findOne({username: username})
+        const newComment = new CommentModel({
+            text: comment,
+            createdAt: Date.now(),
+            userId:user?._id,
+            rating,
+            firmId: job!.firmId,
+            bookingId: job!._id
+        })
+
+        await newComment.save();
+
+        res.status(200).json(newComment);
+    } catch (error) {
+        res.status(500).json({ message: error});
+    }
+}
+
+const cancelJob = async(req: Request, res: Response) => {
+    try {
+        const job = await JobModel.findById(req.params.id);
+    
+        if (!job) {
+          return res.status(404).json({ message: 'Job not found' });
+        }
+    
+        if (job.status !== 'Pending' && job.status !== 'Confirmed') {
+          return res.status(400).json({ message: 'Can delete only active jobs' });
+        }
+    
+        job.status = 'Cancelled';
+        await job.save();
+    
+        res.status(200).json({ message: 'Deleted' });
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+
+const getComments = async(req: Request, res: Response) => {
+    try {
+        const comments = await CommentModel.find({bookingId : req.body.id});   
+        res.status(200).json(comments);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
 
 export default {
     getUserInfo,
     updateUserInfo,
     getFirms,
-    getFirmDetails
+    getFirmDetails,
+    getCurrentJobs,
+    getArchivedJobs,
+    addComment,
+    cancelJob,
+    getComments
 }

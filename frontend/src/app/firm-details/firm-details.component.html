@@ -25,5 +25,11 @@
     </ul>
   
     <h3 class="text-xl mt-4">Локација</h3>
-    <div id="map" class="h-64 w-full bg-gray-300"></div> <!-- Мапа са локацијом -->
+    <div id="map" class="h-64 w-full bg-gray-300"></div><!-- Мапа са локацијом -->
+
+    <button (click)="zakazi()" *ngIf="showWizard == false">Zakazi uredjivanje</button>
+    <button (click)="otkazi()" *ngIf="showWizard">Otkazi</button>
+    <div *ngIf="showWizard">
+        <app-wizard-job></app-wizard-job>
+    </div>
 </div>

@@ -1,0 +1,83 @@
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Тренутна заказивања</h2>
+    <table class="min-w-full table-auto mb-8">
+      <thead>
+        <tr>
+          <th>Datum zakazivanja</th>
+          <th>Datum zavrsetka</th>
+          <th>Firma</th>
+          <th>Usluge</th>
+          <th>Otkazi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of currentJobs">
+          <td>{{ job.startDate | date }}</td>
+          <td>{{ job.endDate | date }}</td>
+          <td >{{ firmMap.get(job.firmId._id).name}}</td>
+          <td>
+            {{job.gardenId.services}}
+          </td>
+          <td>
+            <button class="bg-red-500 text-white px-4 py-2" (click)="cancelJob(job._id)" [disabled]="daysUntilJob(job.startDate) < 1">
+              Otkazi
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <h2 class="text-2xl font-bold mb-4">Архивирана заказивања</h2>
+    <table class="min-w-full table-auto mb-8">
+      <thead>
+        <tr>
+          <th>Datum zavrsetka</th>
+          <th>Firma</th>
+          <th>komentar</th>
+          <th>Oceni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of pastJobs">
+          <td>{{ job.endDate | date }}</td>
+          <td>{{ firmMap.get(job.firmId._id).name }}</td>
+          <td>
+            <div *ngIf="commentsMap.get(job._id) as commentsValues">
+                <ul *ngFor="let commentValue of commentsValues">
+                    <li>{{ commentValue.text || 'Nema komentara' }}</li>
+                    <li>{{ commentValue.rating || 'Nema komentara' }}</li>
+                </ul>
+            </div>
+            <div *ngIf="commentsMap.get(job._id) == undefined">
+                Nema komentara
+              </div>
+          </td>
+          <td>
+           
+              <button class="bg-blue-500 text-white px-4 py-2" *ngIf="commentsMap.get(job._id) == undefined && job.status == 'Completed'" (click)="openReviewForm(job)">
+                Oceni
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Форма за коментар и оцену -->
+    <div *ngIf="selectedJob" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+      <div class="bg-white p-6 rounded shadow-lg">
+        <h3 class="text-xl mb-4">Oceni posao sa{{ selectedJob.firmId }}</h3>
+        
+        <label class="block mb-2">Оцена (1-5):</label>
+        <input type="number" [(ngModel)]="rating" min="1" max="5" class="border p-2 rounded w-full mb-4">
+  
+        <label class="block mb-2">Коментар:</label>
+        <textarea [(ngModel)]="comment" class="border p-2 rounded w-full mb-4"></textarea>
+  
+        <div class="flex justify-end">
+          <button class="bg-gray-500 text-white px-4 py-2 mr-2" (click)="selectedJob = undefined">Otkazi</button>
+          <button class="bg-green-500 text-white px-4 py-2" (click)="submitReview()">Posalji</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

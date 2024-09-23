@@ -17,6 +17,7 @@
     <td>
       <button (click)="editUser(user)" *ngIf="user.status !== 'Deactivated'">Uredi</button>
       <button (click)="deactivateUser(user.username)" *ngIf="user.status !== 'Deactivated'">Deaktiviraj</button>
+      <button (click)="deactivateUser(user.username)" *ngIf="user.status == 'Deactivated'">Aktiviraj</button>
       <button (click)="approveRequest(user.username)" *ngIf="user.status == 'Pending'">Prihvati</button>
       <button (click)="denyRequest(user.username)" *ngIf="user.status == 'Pending'">Odbij</button>
     </td>

@@ -10,6 +10,7 @@ import { OwnerFirmsService } from '../services/owner-firms.service';
 export class FirmDetailsComponent {
   firm: any;
   comments: any;
+  showWizard: boolean = false
 
   constructor(private route: ActivatedRoute, private firmService: OwnerFirmsService) {}
 
@@ -19,5 +20,11 @@ export class FirmDetailsComponent {
       this.firm = data.firm;
       this.comments = data.comments;
     });
+  }
+  zakazi() {
+    this.showWizard = true
+  }
+  otkazi() {
+    this.showWizard = false
   }
 }

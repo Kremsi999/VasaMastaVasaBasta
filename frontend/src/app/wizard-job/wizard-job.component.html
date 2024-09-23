@@ -1,0 +1,92 @@
+<div class="max-w-3xl mx-auto p-6">
+    <!-- Кораци -->
+    <div class="flex justify-between mb-4">
+      <div [class]="currentStep === 1 ? 'text-blue-500' : 'text-gray-500'">Корак 1</div>
+      <div [class]="currentStep === 2 ? 'text-blue-500' : 'text-gray-500'">Корак 2</div>
+    </div>
+  
+    <!-- Први корак: Датум, Време, Врста баште, Укупна квадратура -->
+    <div *ngIf="currentStep === 1">
+      <form [formGroup]="firstFormGroup">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Датум:</label>
+          <input type="date" formControlName="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Време:</label>
+          <input type="time" formControlName="time" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Тип баште:</label>
+          <select formControlName="gardenType" (change)="gardenType = firstFormGroup.get('gardenType')!.value" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <option value="">Одаберите тип</option>
+            <option value="private">Приватна башта</option>
+            <option value="restaurant">Башта ресторана</option>
+          </select>
+        </div>
+  
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Укупна квадратура:</label>
+          <input type="number" formControlName="totalArea" placeholder="Унесите укупну квадратуру" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div class="flex justify-between">
+          <button type="button" class="bg-blue-500 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="nextStep()" [disabled]="!firstFormGroup.valid">
+            Настави
+          </button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Други корак: Детаљи баште -->
+    <div *ngIf="currentStep === 2">
+      <form [formGroup]="secondFormGroup">
+        <div *ngIf="gardenType === 'private'" class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Квадратура базена:</label>
+          <input type="number" formControlName="poolArea" placeholder="Унесите квадратуру базена" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div *ngIf="gardenType === 'private'" class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Квадратура зеленило:</label>
+          <input type="number" formControlName="greeneryArea" placeholder="Унесите квадратуру зеленило" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div *ngIf="gardenType === 'private'" class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Квадратура лежаљке и столови:</label>
+          <input type="number" formControlName="furnitureArea" placeholder="Унесите квадратуру за лежаљке и столове" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div *ngIf="gardenType === 'restaurant'" class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Квадратура фонтане:</label>
+          <input type="number" formControlName="fountainArea" placeholder="Унесите квадратуру фонтане" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div *ngIf="gardenType === 'restaurant'" class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Број столова:</label>
+          <input type="number" formControlName="tables" placeholder="Унесите број столова" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div *ngIf="gardenType === 'restaurant'" class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Број столица:</label>
+          <input type="number" formControlName="chairs" placeholder="Унесите број столица" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+  
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Додатни опис:</label>
+          <textarea formControlName="description" placeholder="Унесите додатни опис или захтеве" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+        </div>
+  
+        <div class="flex justify-between">
+          <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="previousStep()">
+            Назад
+          </button>
+          <button type="button" class="bg-blue-500 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="saveGarden(); scheduleJob()">
+            Заврши
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

@@ -134,6 +134,18 @@ export class AdminAppComponent {
     );
   }
 
+  activateUser(username: string): void {
+    this.adminService.editUser({username: username, status: 'Active' }).subscribe(
+      () => {
+        alert('Korisnik ponovo aktivan');
+        this.loadUsers();
+      },
+      (error) => {
+        console.error('Greška prilikom deaktivacije korisnika', error);
+      }
+    );
+  }
+
   loadRequests(): void {
     this.adminService.getUsers().subscribe(
       (data) => {

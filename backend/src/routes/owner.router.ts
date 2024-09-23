@@ -17,4 +17,14 @@ ownerRouter.post('/getFirms', (req, res) => Owner.getFirms(req, res))
 
 ownerRouter.post('/getFirmDetails', (req, res) => Owner.getFirmDetails(req, res))
 
+ownerRouter.post('/getAllActiveJobs', (req, res) => Owner.getCurrentJobs(req, res))
+
+ownerRouter.post('/getAllArchivedJobs', (req, res) => Owner.getArchivedJobs(req, res))
+
+ownerRouter.post('/addComment', (req, res) => Owner.addComment(req, res))
+
+ownerRouter.post('/getComments', (req, res) => Owner.getComments(req, res))
+
+ownerRouter.delete('/delete/:id', (req, res) => Owner.cancelJob(req, res))
+
 export default ownerRouter

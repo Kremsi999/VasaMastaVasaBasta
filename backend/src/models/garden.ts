@@ -45,6 +45,9 @@ const Garden = new Schema({
     type: {
         type: String,
         enum: ['private', 'restaurant']
+    },
+    services: {
+        type: [String],
     }
 })
 
